@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bonito - PE</title>
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .wrapper {
+            background: #f7b604;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px
+        }
+        .title {
+            margin-top: 30px;
+        }
+        .title img {
+            width: 900px;
+        }
+        .banner img{
+            width: 560px;
+            border-radius: 30px;
+        }
+        .button {
+            background: #ed6f23;
+            border: 0;
+            padding: 20px 60px;
+            width: 560px;
+            border-radius: 40px;
+            font-size: 18px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        @media(max-width: 780px) {
+            .banner img{
+                width: 450px;
+            }
+            .button {
+                width: 450px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="wrapper">
+        <div class="title">
+            <img src="./assets/img_1.png" alt="imagem com texto escrito compartilhe esse link">
+        </div>
+        <div class="banner">
+            <img src="./assets/img_2.jpeg" alt="imagem com uma cachoeira e três pessoas descendo de rapel">
+        </div>
+
+        <button id="shareButton" type="button" class="button" onclick="shareImage">Compartilhar imagem</button>
+    </main>
+
+    <script type="text/javascript">
+        const shareButton = document.getElementById('shareButton')
+
+        async function shareImage() {
+            const response = await fetch('./assets/bonito.jpg');
+            const blob = await response.blob();
+            const filesArray = [
+                new File(
+                [blob],
+                'bonito.jpg',
+                {
+                    type: "image/jpg",
+                    lastModified: new Date().getTime()
+                }
+            )
+            ];
+            const shareData = {
+                files: filesArray,
+            };
+
+            navigator.share(shareData);
+        }
+
+        shareButton.addEventListener('click', shareImage)
+    </script>
+</body>
+</html>
