@@ -63,67 +63,35 @@
             <img src="./assets/img_2.jpeg" alt="imagem com uma cachoeira e três pessoas descendo de rapel">
         </div>
 
-        <button id="shareButton" type="button" class="button" onclick="shareImage">Compartilhar imagem 2</button>
+        <button id="shareButton" type="button" class="button">Compartilhar imagem 2</button>
     </main>
 
     <script type="text/javascript">
         const shareButton = document.getElementById('shareButton')
+        const blob = await fetch('https://cdn.glitch.com/f96f78ec-d35d-447b-acf4-86f2b3658491%2Fchuck.png?v=1618311092497')
+            .then(response => response.blob())
 
         async function shareImage() {
-            let imageResponse = await window.fetch('https://viagemeturismo.abril.com.br/wp-content/uploads/2016/10/ms22.jpg');
-            let imageBuffer = await imageResponse.arrayBuffer();
-            let fileArray = [new File([imageBuffer], "File Name", {
-                type: "image/png",
-                lastModified: Date.now()
-            })];
-            if(window.navigator && window.navigator.canShare && window.navigator.canShare({files: fileArray})){
-                navigator.share({
-                files: fileArray,
-                title: 'Title',
-                text: 'Text to show'
-                }).then(() => {
-                console.log('Thanks for sharing!');
-                })
-                .catch(console.error);
+             const data = {
+                files: [
+                new File([blob], 'file.png', {
+                    type: blob.type,
+                }),
+                ],
+                title: title,
+                text: text,
             }
-            // const file = new File(['bonit'], './assets/bonito.jpg', { type: 'image/jpg' })
-            // if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            //     navigator.share({
-            //         files: [file],
-            //         title: 'Vacation Pictures',
-            //         text: 'Photos from September 27 to October 14.',
-            //     })
-            //     .then(() => console.log('Share was successful.'))
-            //     .catch((error) => console.log('Sharing failed', error));
-            //     } else {
-            //     console.log(`Your system doesn't support sharing files.`);
-            // }
-            // const response = await fetch('./assets/bonito.jpg');
-            // const blob = await response.blob();
-
-            // console.log(response, 'blob')
-            // const filesArray = [
-            //     new File(
-            //     [blob],
-            //     'bonito.jpg',
-            //     {
-            //         type: "image/jpg",
-            //         lastModified: new Date().getTime()
-            //     }
-            // )
-            // ];
-            // const shareData = {
-            //     files: filesArray,
-            // };
-
-            // await navigator.share({ files: [file] });
+            try {
+                if (!(navigator.canShare(data))) {
+                throw new Error("Can't share data.", data);
+                }
+                await navigator.share(data);
+            } catch (err) {
+                console.error(err.name, err.message);
+            }
         }
 
         shareButton.addEventListener('click', shareImage)
-
-        // const file = new File([blob], 'rick.jpg', {type: blob.type});por essas 2 linhas 
-        // const ext = shareimg.split('.').pop();           
-        // const file = new File([blob], 'image.'+ext, {type: blob.type});
     </script>
 </body>
 </html>
