@@ -127,26 +127,9 @@
       // GWD Predefined Function
       gwd.actions.gwdPagedeck.goToPage('pagedeck', 'page1_1', 'fade', 1000, 'linear', 'top');
     };
-    gwd.auto_Gwd_taparea_2Action = async function(event) {
-      const blob = await fetch('./assets/bonito.jpg')
-            .then(response => response.blob())
-             const data = {
-                files: [
-                new File([blob], 'bonito.gif', {
-                    type: blob.type,
-                }),
-                ],
-                title: 'Cachoeira de bonito',
-                text: 'Essa cachoeira fica localizada em Pernambuco',
-            }
-            try {
-                if (!(navigator.canShare(data))) {
-                throw new Error("Não é possível compartilhar", data);
-                }
-                await navigator.share(data);
-            } catch (err) {
-                console.error(err.name, err.message);
-            }
+    gwd.auto_Gwd_taparea_2Action = function(event) {
+      // GWD Predefined Function
+      gwd.actions.gwdGoogleAd.exit('gwd-ad', 'Link', 'https://ueslen-dev.github.io/rich-share/share-page', true, true, 'page1_1');
     };
   </script>
   <script type="text/javascript" gwd-events="registration">
@@ -187,7 +170,7 @@
         </div>
       </gwd-page>
     </gwd-pagedeck>
-    <gwd-exit metric="Link" url="https://beacons.ai/bonitope"></gwd-exit>
+    <gwd-exit metric="Link" url="https://ueslen-dev.github.io/rich-share/share-page"></gwd-exit>
   </gwd-google-ad>
   <script type="text/javascript" id="gwd-init-code">
     (function() {

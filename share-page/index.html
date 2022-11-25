@@ -7,26 +7,34 @@
     <title>Bonito - PE</title>
 
     <style>
+        body {
+            background: #f7b604;
+        }
         body, html {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        img {
+           width: 100%;
         }
         .wrapper {
-            background: #f7b604;
-            width: 100vw;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 30px
+            justify-content: center;
+            gap: 30px;
+            height: auto;
+            min-height: 100%;
         }
         .title {
             margin-top: 30px;
         }
         .title img {
-            width: 900px;
+            width: 900px;         
         }
         .banner img{
             width: 560px;
@@ -68,30 +76,22 @@
 
     <script type="text/javascript">
         const shareButton = document.getElementById('shareButton')
-        
-       function teste() {
-        console.log('return')
-       }
-        
-        
 
         async function shareImage() {
-            const blob = await fetch('https://cdn.glitch.com/f96f78ec-d35d-447b-acf4-86f2b3658491%2Fchuck.png?v=1618311092497')
+            const blob = await fetch('./assets/02_2.gif')
             .then(response => response.blob())
-
-            console.log('chamando')
              const data = {
                 files: [
-                new File([blob], 'file.png', {
+                new File([blob], 'bonito.gif', {
                     type: blob.type,
                 }),
                 ],
-                title: 'title',
-                text: 'text',
+                title: 'Cachoeira de bonito',
+                text: 'Essa cachoeira fica localizada em Pernambuco',
             }
             try {
                 if (!(navigator.canShare(data))) {
-                throw new Error("Can't share data.", data);
+                throw new Error("Não é possível compartilhar", data);
                 }
                 await navigator.share(data);
             } catch (err) {
