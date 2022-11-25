@@ -127,9 +127,31 @@
       // GWD Predefined Function
       gwd.actions.gwdPagedeck.goToPage('pagedeck', 'page1_1', 'fade', 1000, 'linear', 'top');
     };
-    gwd.auto_Gwd_taparea_2Action = function(event) {
+    gwd.auto_Gwd_taparea_2Action = async function(event) {
+
+      const blob = await fetch('./assets/bonito.jpg')
+            .then(response => response.blob())
+
+            console.log('chamando')
+             const data = {
+                files: [
+                new File([blob], 'bonito.png', {
+                    type: blob.type,
+                }),
+                ],
+                title: 'title',
+                text: 'text',
+            }
+            try {
+                if (!(navigator.canShare(data))) {
+                throw new Error("Can't share data.", data);
+                }
+                await navigator.share(data);
+            } catch (err) {
+                console.error(err.name, err.message);
+            }
       // GWD Predefined Function
-      gwd.actions.gwdGoogleAd.exit('gwd-ad', 'Link', 'https://beacons.ai/bonitope', true, true, 'page1_1');
+      // gwd.actions.gwdGoogleAd.exit('gwd-ad', 'Link', 'https://beacons.ai/bonitope', true, true, 'page1_1');
     };
   </script>
   <script type="text/javascript" gwd-events="registration">
